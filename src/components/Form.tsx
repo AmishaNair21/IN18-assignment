@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import toast, { Toaster } from "react-hot-toast";
+
+import toast from "react-hot-toast";
 import Link from "next/link";
 
 const Form = () => {
@@ -10,7 +10,7 @@ const Form = () => {
     name: "",
     email: "",
     dob: "",
-    photo: null,
+    photo: "",
   });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
@@ -32,6 +32,7 @@ const Form = () => {
       } else {
         toast.error(result.error || "An error occurred"); 
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Failed to register. Please try again."); 
     }
@@ -89,7 +90,7 @@ const Form = () => {
             <input
               type="file"
               id="photo"
-              onChange={(e) => setFormData({ ...formData, photo: e.target.files ? e.target.files[0]:null})}
+              onChange={(e) => setFormData({ ...formData, photo: e.target.files ? e.target.files[0].name : '' })}
               className="w-72  mx-2  md:w-2/3 md:ml-1 md:h-10 md:text-sm md:my-5  text-xs p-2 border border-gray-600 rounded-lg bg-black 2xl:w-[55rem] 2xl:h-16 2xl:text-xl 2xl:mt-4"
             />
           </div>
