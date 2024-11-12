@@ -39,9 +39,9 @@ const Form = () => {
   }
 
   return (
-<div className="flex flex-col md:flex-row   justify-center h-screen items-center">
+<div className="flex flex-col md:flex-row justify-center h-screen items-center">
 
-    <div className="w-80 border border-gray-500 h-[30rem] justify-center    rounded-md flex overflow-hidden flex-col md:w-1/2 md:ml-[50%]   md:h-screen ">
+    <div className="w-80 border border-gray-500 h-[35rem] justify-center    rounded-md flex overflow-hidden flex-col md:w-1/2 md:ml-[50%]   md:h-screen ">
 
 
         {/* title  */}
