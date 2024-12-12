@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import UserCard from '@/components/userCard';
+import SkeletonCard from '@/components/userCardSkeleton'; // Import Skeleton for UserCard
 import Link from 'next/link';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'; // Import left and right arrow icons
 import { formatDistanceToNow, parseISO } from 'date-fns'; // Import the necessary functions from date-fns
@@ -11,9 +12,12 @@ const Page = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [hasPrevPage, setHasPrevPage] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+  
 
   useEffect(() => {
     async function fetchUsers() {
+      setIsLoading(true); // Start loading
       try {
         const response = await fetch(`/api/register?page=${currentPage}`, {
           method: 'GET',
@@ -25,6 +29,8 @@ const Page = () => {
         setHasPrevPage(hasPrevPage);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false); // End loading
       }
     }
     fetchUsers();
@@ -40,16 +46,21 @@ const Page = () => {
           Sign Up
         </Link>
       </div>
-  
-      {users.map((user: { id: string, name: string, email: string, photo: string | null, created_at: string }) => (
-        <UserCard
-          key={user.id}
-          name={user.name}
-          email={user.email}
-          photo={user.photo && user.photo !== 'NULL' ? user.photo : '/next.svg'}
-          registeredTime={formatDistanceToNow(parseISO(user.created_at)) + ' ago'}
-        />
-      ))}
+
+      {/* Skeleton or User Cards */}
+      {isLoading
+        ? Array.from({ length: 4 }).map((_, index) => (
+            <SkeletonCard key={index} /> // Show skeleton while loading
+          ))
+        : users.map((user: { id: string; name: string; email: string; photos: string | null; created_at: string }) => (
+            <UserCard
+              key={user.id}
+              name={user.name}
+              email={user.email}
+              photos={user.photos && user.photos !== 'NULL' ? user.photos : '/next.svg'}
+              registeredTime={formatDistanceToNow(parseISO(user.created_at)) + ' ago'}
+            />
+          ))}
 
       <div className="flex gap-2 ">
         <button

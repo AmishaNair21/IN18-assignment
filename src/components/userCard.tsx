@@ -8,21 +8,13 @@ import { FiMoreVertical } from "react-icons/fi"; // For three dots icon
 interface UserCardProps {
   name: string;
   email: string;
-  photo: string | null; // Can be null if no photo provided
+  photos: string | null; // Can be null if no photo provided
   registeredTime: string; // e.g., "2 hours ago"
 }
 
-const UserCard = ({ name, email, photo, registeredTime }: UserCardProps) => {
-  // Helper function to validate image URLs
-  const isValidUrl = (url: string | null | undefined): boolean => {
-    if (!url) return false;
-    try {
-      new URL(url);
-      return true;
-    } catch {
-      return false;
-    }
-  };
+const UserCard = ({ name, email, registeredTime }: UserCardProps) => {
+  
+  
 
   return (
     <div className="flex items-center justify-between w-[90%] p-4 border mb-4 border-gray-700 rounded-lg shadow-sm">
@@ -30,19 +22,15 @@ const UserCard = ({ name, email, photo, registeredTime }: UserCardProps) => {
       <div className="flex items-center space-x-4">
         {/* Profile Picture */}
         <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-700">
-          {photo && isValidUrl(photo) ? (
+         
             <Image
-              src={photo}
+              src="/vercel.svg"
               alt={`${name}'s profile`}
               width={40}
               height={40}
               className="object-cover"
             />
-          ) : (
-            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
-              N/A
-            </div>
-          )}
+          
         </div>
 
         {/* User Info */}

@@ -1,22 +1,28 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabaseClient'; 
+import { supabase } from '@/lib/supabaseClient';
 import * as z from 'zod';
+ // For generating unique file names
 
-//zod schema
+// zod schema
 const RegistrationSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   email: z.string().email({ message: 'Invalid email format' }),
   dob: z.string().refine(date => !isNaN(Date.parse(date)), {
     message: 'Invalid date format',
   }),
-  photo: z.string().nullable().optional(),
+ 
 });
 
-//post method
+
+
+// POST method
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const parsedData = RegistrationSchema.parse(body);
+
+    
+  
 
     // Insert data into Supabase
     const { data, error } = await supabase
@@ -34,8 +40,7 @@ export async function POST(req: Request) {
   }
 }
 
-
-//get data from supabase
+// GET method
 export async function GET(req: Request) {
   try {
     // Get the search parameters directly from the request URL
@@ -56,17 +61,23 @@ export async function GET(req: Request) {
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
+
     // Calculate total pages (rounding up to ensure partial pages are counted as full pages)
-    // Ensure count is not null before calculating totalPages
     const totalPages = count ? Math.ceil(count / limit) : 0;
+
+    
+    const users = data.map(user => ({
+      ...user,
+     
+    }));
 
     // Return the users and pagination info
     return NextResponse.json({
-      users: data,
-      totalPages: totalPages,
+      users,
+      totalPages,
       currentPage: page,
       hasNextPage: page < totalPages, // Whether there is a next page
-      hasPrevPage: page > 1 // Whether there is a previous page
+      hasPrevPage: page > 1, // Whether there is a previous page
     });
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {

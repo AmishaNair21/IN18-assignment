@@ -5,13 +5,15 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
+
 const Form = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     dob: "",
-    photo: "",
   });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
 
@@ -40,10 +42,13 @@ const Form = () => {
 
   return (
 <div className="flex flex-col md:flex-row justify-center h-screen items-center">
+<img src="/signup.jpeg" alt="signup" className="overflow-hidden w-1/2 h-screen " />
 
-    <div className="w-80 border border-gray-500 h-[35rem] justify-center    rounded-md flex overflow-hidden flex-col md:w-1/2 md:ml-[50%]   md:h-screen ">
+    <div className="w-80 border border-gray-500 h-[35rem] justify-center    rounded-md flex overflow-hidden flex-col md:w-1/2     md:h-screen ">
 
-
+    
+ 
+ 
         {/* title  */}
         <h1 className="text-xl mt-4  text-center md:text-4xl 2xl:text-6xl ">Create an account</h1>
         <p className="text-xs 2xl:text-xl 2xl:mt-2  font-sans text-gray-400 text-center">Enter information below to register yourself</p>
@@ -85,15 +90,7 @@ const Form = () => {
               className="w-72  mx-2  md:w-2/3 md:ml-2 md:h-10 md:text-xs  text-xs p-2 border border-gray-600 rounded-lg bg-black 2xl:w-[55rem] 2xl:h-16 2xl:text-base  2xl:my-5"
             />
           </div>
-          <div>
-            <label htmlFor="photo" className="font-sans text-[0.70rem] px-2 md:ml-5 ml-1 mb-1 2xl:text-xl 2xl:ml-7">Profile Photo</label>
-            <input
-              type="file"
-              id="photo"
-              onChange={(e) => setFormData({ ...formData, photo: e.target.files ? e.target.files[0].name : '' })}
-              className="w-72  mx-2  md:w-2/3 md:ml-1 md:h-10 md:text-sm md:my-5  text-xs p-2 border border-gray-600 rounded-lg bg-black 2xl:w-[55rem] 2xl:h-16 2xl:text-xl 2xl:mt-4"
-            />
-          </div>
+        
   <div className="flex flex-col justify-center items-center mt-6">
   <button
             type="submit"
